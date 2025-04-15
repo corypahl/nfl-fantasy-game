@@ -1,0 +1,259 @@
+{
+  "ARI": {
+    "QB": { "name": "Kyler Murray", "points": 297.2 },
+    "RB": { "name": "James Conner", "points": 230.3 },
+    "WR1": { "name": "Marvin Harrison Jr.", "points": 165.5 },
+    "WR2": { "name": "Michael Wilson", "points": 101.0 },
+    "TE": { "name": "Trey McBride", "points": 194.3 },
+    "DEF": { "name": "Cardinals D/ST", "points": 100.0 }
+  },
+  "ATL": {
+    "QB": { "name": "Kirk Cousins", "points": 176.3 },
+    "RB": { "name": "Bijan Robinson", "points": 311.2 },
+    "WR1": { "name": "Drake London", "points": 230.8 },
+    "WR2": { "name": "Darnell Mooney", "points": 161.2 },
+    "TE": { "name": "Kyle Pitts", "points": 107.7 },
+    "DEF": { "name": "Falcons D/ST", "points": 93.0 }
+  },
+  "BAL": {
+    "QB": { "name": "Lamar Jackson", "points": 430.4 },
+    "RB": { "name": "Derrick Henry", "points": 326.9 },
+    "WR1": { "name": "Zay Flowers", "points": 172.5 },
+    "WR2": { "name": "Rashod Bateman", "points": 152.1 },
+    "TE": { "name": "Mark Andrews", "points": 161.3 },
+    "DEF": { "name": "Ravens D/ST", "points": 118.0 }
+  },
+  "BUF": {
+    "QB": { "name": "Josh Allen", "points": 379.0 },
+    "RB": { "name": "James Cook", "points": 250.7 },
+    "WR1": { "name": "Khalil Shakir", "points": 144.5 },
+    "WR2": { "name": "Amari Cooper", "points": 100.7 },
+    "TE": { "name": "Dalton Kincaid", "points": 78.8 },
+    "DEF": { "name": "Bills D/ST", "points": 133.0 }
+  },
+  "CAR": {
+    "QB": { "name": "Bryce Young", "points": 195.0 },
+    "RB": { "name": "Chuba Hubbard", "points": 220.1 },
+    "WR1": { "name": "Adam Thielen", "points": 115.5 },
+    "WR2": { "name": "Xavier Legette", "points": 100.6 },
+    "TE": { "name": "Ja'Tavion Sanders", "points": 56.7 },
+    "DEF": { "name": "Panthers D/ST", "points": 41.0 }
+  },
+  "CHI": {
+    "QB": { "name": "Caleb Williams", "points": 254.5 },
+    "RB": { "name": "D'Andre Swift", "points": 193.5 },
+    "WR1": { "name": "DJ Moore", "points": 189.1 },
+    "WR2": { "name": "Keenan Allen", "points": 149.4 },
+    "TE": { "name": "Cole Kmet", "points": 96.9 },
+    "DEF": { "name": "Bears D/ST", "points": 117.0 }
+  },
+  "CIN": {
+    "QB": { "name": "Joe Burrow", "points": 372.8 },
+    "RB": { "name": "Chase Brown", "points": 228.0 },
+    "WR1": { "name": "Ja'Marr Chase", "points": 339.5 },
+    "WR2": { "name": "Tee Higgins", "points": 185.6 },
+    "TE": { "name": "Mike Gesicki", "points": 109.0 },
+    "DEF": { "name": "Bengals D/ST", "points": 102.0 }
+  },
+  "CLE": {
+    "QB": { "name": "Jameis Winston", "points": 131.1 },
+    "RB": { "name": "Jerome Ford", "points": 115.5 },
+    "WR1": { "name": "Jerry Jeudy", "points": 195.9 },
+    "WR2": { "name": "Elijah Moore", "points": 90.4 },
+    "TE": { "name": "David Njoku", "points": 116.5 },
+    "DEF": { "name": "Browns D/ST", "points": 79.0 }
+  },
+  "DAL": {
+    "QB": { "name": "Dak Prescott", "points": 116.5 },
+    "RB": { "name": "Rico Dowdle", "points": 178.3 },
+    "WR1": { "name": "CeeDee Lamb", "points": 212.9 },
+    "WR2": { "name": "Jalen Tolbert", "points": 127.5 },
+    "TE": { "name": "Jake Ferguson", "points": 74.9 },
+    "DEF": { "name": "Cowboys D/ST", "points": 109.0 }
+  },
+  "DEN": {
+    "QB": { "name": "Bo Nix", "points": 316.7 },
+    "RB": { "name": "Javonte Williams", "points": 131.9 },
+    "WR1": { "name": "Courtland Sutton", "points": 199.8 },
+    "WR2": { "name": "Marvin Mims", "points": 110.0 },
+    "TE": { "name": "Adam Trautman", "points": 37.3 },
+    "DEF": { "name": "Broncos D/ST", "points": 179.0 }
+  },
+  "DET": {
+    "QB": { "name": "Jared Goff", "points": 324.0 },
+    "RB": { "name": "Jahmyr Gibbs", "points": 336.9 },
+    "WR1": { "name": "Amon-Ra St. Brown", "points": 258.7 },
+    "WR2": { "name": "Jameson Williams", "points": 183.2 },
+    "TE": { "name": "Sam LaPorta", "points": 144.6 },
+    "DEF": { "name": "Lions D/ST", "points": 123.0 }
+  },
+  "GB": {
+    "QB": { "name": "Jordan Love", "points": 233.9 },
+    "RB": { "name": "Josh Jacobs", "points": 275.1 },
+    "WR1": { "name": "Jayden Reed", "points": 169.5 },
+    "WR2": { "name": "Romeo Doubs", "points": 109.1 },
+    "TE": { "name": "Tucker Kraft", "points": 138.3 },
+    "DEF": { "name": "Packers D/ST", "points": 144.0 }
+  },
+  "HOU": {
+    "QB": { "name": "C.J. Stroud", "points": 220.4 },
+    "RB": { "name": "Joe Mixon", "points": 222.5 },
+    "WR1": { "name": "Nico Collins", "points": 176.6 },
+    "WR2": { "name": "Tank Dell", "points": 114.5 },
+    "TE": { "name": "Dalton Schultz", "points": 91.7 },
+    "DEF": { "name": "Texans D/ST", "points": 139.0 }
+  },
+  "IND": {
+    "QB": { "name": "Anthony Richardson", "points": 162.9 },
+    "RB": { "name": "Jonathan Taylor", "points": 237.7 },
+    "WR1": { "name": "Josh Downs", "points": 147.5 },
+    "WR2": { "name": "Alec Pierce", "points": 142.9 },
+    "TE": { "name": "Mo Alie-Cox", "points": 26.7 },
+    "DEF": { "name": "Colts D/ST", "points": 91.0 }
+  },
+  "JAX": {
+    "QB": { "name": "Trevor Lawrence", "points": 145.2 },
+    "RB": { "name": "Tank Bigsby", "points": 125.5 },
+    "WR1": { "name": "Brian Thomas Jr.", "points": 240.5 },
+    "WR2": { "name": "Parker Washington", "points": 81.0 },
+    "TE": { "name": "Brenton Strange", "points": 71.1 },
+    "DEF": { "name": "Jaguars D/ST", "points": 67.0 }
+  },
+  "KC": {
+    "QB": { "name": "Patrick Mahomes", "points": 282.5 },
+    "RB": { "name": "Kareem Hunt", "points": 143.9 },
+    "WR1": { "name": "Xavier Worthy", "points": 157.7 },
+    "WR2": { "name": "Deandre Hopkins", "points": 119.0 },
+    "TE": { "name": "Travis Kelce", "points": 146.9 },
+    "DEF": { "name": "Chiefs D/ST", "points": 104.0 }
+  },
+  "LV": {
+    "QB": { "name": "Gardner Minshew", "points": 96.3 },
+    "RB": { "name": "Alexander Mattison", "points": 119.4 },
+    "WR1": { "name": "Jakobi Meyers", "points": 174.5 },
+    "WR2": { "name": "Tre Tucker", "points": 105.8 },
+    "TE": { "name": "Brock Bowers", "points": 206.7 },
+    "DEF": { "name": "Raiders D/ST", "points": 71.0 }
+  },
+  "LAC": {
+    "QB": { "name": "Justin Herbert", "points": 285.4 },
+    "RB": { "name": "J.K. Dobbins", "points": 175.8 },
+    "WR1": { "name": "Ladd McConkey", "points": 199.9 },
+    "WR2": { "name": "Quentin Johnston", "points": 147.2 },
+    "TE": { "name": "Will Dissly", "points": 85.1 },
+    "DEF": { "name": "Chargers D/ST", "points": 126.0 }
+  },
+  "LAR": {
+    "QB": { "name": "Matthew Stafford", "points": 214.6 },
+    "RB": { "name": "Kyren Williams", "points": 255.1 },
+    "WR1": { "name": "Puka Nacua", "points": 167.1 },
+    "WR2": { "name": "Cooper Kupp", "points": 141.5 },
+    "TE": { "name": "Colby Parkinson", "points": 50.4 },
+    "DEF": { "name": "Rams D/ST", "points": 114.0 }
+  },
+  "MIA": {
+    "QB": { "name": "Tua Tagovailoa", "points": 181.6 },
+    "RB": { "name": "De'Von Achane", "points": 260.9 },
+    "WR1": { "name": "Tyreek Hill", "points": 177.7 },
+    "WR2": { "name": "Jaylen Waddle", "points": 120.6 },
+    "TE": { "name": "Jonnu Smith", "points": 178.3 },
+    "DEF": { "name": "Dolphins D/ST", "points": 84.0 }
+  },
+  "MIN": {
+    "QB": { "name": "Sam Darnold", "points": 308.0 },
+    "RB": { "name": "Aaron Jones", "points": 216.1 },
+    "WR1": { "name": "Justin Jefferson", "points": 266.0 },
+    "WR2": { "name": "Jordan Addison", "points": 181.0 },
+    "TE": { "name": "T.J. Hockenson", "points": 66.0 },
+    "DEF": { "name": "Vikings D/ST", "points": 158.0 }
+  },
+  "NE": {
+    "QB": { "name": "Drake Maye", "points": 177.1 },
+    "RB": { "name": "Rhamondre Stevenson", "points": 159.4 },
+    "WR1": { "name": "DeMario Douglas", "points": 114.7 },
+    "WR2": { "name": "Kayshon Boutte", "points": 100.4 },
+    "TE": { "name": "Hunter Henry", "points": 112.4 },
+    "DEF": { "name": "Patriots D/ST", "points": 62.0 }
+  },
+  "NO": {
+    "QB": { "name": "Derek Carr", "points": 239 },
+    "RB": { "name": "Alvin Kamara", "points": 234 },
+    "WR1": { "name": "Chris Olave", "points": 178 },
+    "WR2": { "name": "Rashid Shaheed", "points": 143 },
+    "TE": { "name": "Juwan Johnson", "points": 74 },
+    "DEF": { "name": "Saints D/ST", "points": 90.0 }
+  },
+  "NYG": {
+    "QB": { "name": "Daniel Jones", "points": 135.3 },
+    "RB": { "name": "Tyrone Tracy Jr.", "points": 163.3 },
+    "WR1": { "name": "Malik Nabers", "points": 219.1 },
+    "WR2": { "name": "Wan'Dale Robinson", "points": 136.2 },
+    "TE": { "name": "Theo Johnson", "points": 53.6 },
+    "DEF": { "name": "Giants D/ST", "points": 87.0 }
+  },
+  "NYJ": {
+    "QB": { "name": "Aaron Rodgers", "points": 256.6 },
+    "RB": { "name": "Breece Hall", "points": 212.4 },
+    "WR1": { "name": "Garrett Wilson", "points": 201.4 },
+    "WR2": { "name": "Davante Adams", "points": 198.8 },
+    "TE": { "name": "Tyler Conklin", "points": 96.4 },
+    "DEF": { "name": "Jets D/ST", "points": 93.0 }
+  },
+  "PHI": {
+    "QB": { "name": "Jalen Hurts", "points": 315.1 },
+    "RB": { "name": "Saquon Barkley", "points": 338.8 },
+    "WR1": { "name": "A.J. Brown", "points": 183.4 },
+    "WR2": { "name": "DeVonta Smith", "points": 165.4 },
+    "TE": { "name": "Dallas Goedert", "points": 82.6 },
+    "DEF": { "name": "Eagles D/ST", "points": 132.0 }
+  },
+  "PIT": {
+    "QB": { "name": "Russell Wilson", "points": 172.8 },
+    "RB": { "name": "Najee Harris", "points": 186.6 },
+    "WR1": { "name": "George Pickens", "points": 134.9 },
+    "WR2": { "name": "Calvin Austin III", "points": 94.8 },
+    "TE": { "name": "Pat Freiermuth", "points": 135.8 },
+    "DEF": { "name": "Steelers D/ST", "points": 140.0 }
+  },
+  "SF": {
+    "QB": { "name": "Brock Purdy", "points": 266.9 },
+    "RB": { "name": "Jordan Mason", "points": 109.5 },
+    "WR1": { "name": "Jajuan Jennings", "points": 172.0 },
+    "WR2": { "name": "Deebo Samuel", "points": 128.1 },
+    "TE": { "name": "George Kittle", "points": 197.6 },
+    "DEF": { "name": "49ers D/ST", "points": 82.0 }
+  },
+  "SEA": {
+    "QB": { "name": "Geno Smith", "points": 266.0 },
+    "RB": { "name": "Kenneth Walker III", "points": 158.2 },
+    "WR1": { "name": "Jaxon Smith-Njigba", "points": 203.0 },
+    "WR2": { "name": "DK Metcalf", "points": 158.2 },
+    "TE": { "name": "Noah Fant", "points": 80.0 },
+    "DEF": { "name": "Seahawks D/ST", "points": 132.0 }
+  },
+  "TB": {
+    "QB": { "name": "Baker Mayfield", "points": 365.8 },
+    "RB": { "name": "Bucky Irving", "points": 220.9 },
+    "WR1": { "name": "Mike Evans", "points": 203.4 },
+    "WR2": { "name": "Jalen McMillan", "points": 116.9 },
+    "TE": { "name": "Cade Otton", "points": 111.1 },
+    "DEF": { "name": "Buccaneers D/ST", "points": 102.0 }
+  },
+  "TEN": {
+    "QB": { "name": "Will Levis", "points": 119.9 },
+    "RB": { "name": "Tony Pollard", "points": 180.2 },
+    "WR1": { "name": "Calvin Ridley", "points": 167.2 },
+    "WR2": { "name": "Nick Westbrook-Ikhine", "points": 119.7 },
+    "TE": { "name": "Chig Okonkwo", "points": 87.6 },
+    "DEF": { "name": "Titans D/ST", "points": 69.0 }
+  },
+  "WAS": {
+    "QB": { "name": "Jayden Daniels", "points": 355.8 },
+    "RB": { "name": "Brian Robinson Jr.", "points": 149.8 },
+    "WR1": { "name": "Terry McLaurin", "points": 226.8 },
+    "WR2": { "name": "Olamide Zaccheaus", "points": 91.9 },
+    "TE": { "name": "Zach Ertz", "points": 144.4 },
+    "DEF": { "name": "Commanders D/ST", "points": 88.0 }
+  }
+}
+  
