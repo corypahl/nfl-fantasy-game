@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFL Fantasy Team Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px;
+      text-align: center;
+      background-color: black;
+      background-image: url('https://static.vecteezy.com/system/resources/previews/004/607/790/original/american-football-field-background-nfl-football-field-yard-super-bowl-illustration-vector.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      padding: 10px;
+      border: 3px solid #1493FF; /* Light blue for FanDuel */
+      box-shadow: 0 0 20px rgba(20, 147, 255, 0.5);
+    }
+    h1 {
+      color: #1493FF;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background-color: rgba(10, 24, 61, 0.8); /* Dark blue, like FanDuel */
+      border: 2px solid #1493FF;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #1493FF;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 0.9em;
+    }
+    th {
+      background-color: #0A183D; /* Darker blue */
+      color: #1493FF;
+      text-transform: uppercase;
+      font-size: 0.95em;
+    }
+    .team-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      background-color: white;
+      border-radius: 50%;
+      padding: 3px;
+      box-shadow: 0 0 5px rgba(20, 147, 255, 0.7);
+    }
+    button {
+      padding: 10px 12px;
+      cursor: pointer;
+      min-width: 80px;
+      background-color: #1493FF;
+      color: #0A183D;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background-color: #ffffff;
+      color: #0A183D;
+      transform: scale(1.05);
+    }
+    .current-team {
+      margin: 15px 0;
+      padding: 10px;
+      border: 2px solid #1493FF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: rgba(10, 24, 61, 0.8);
+      box-shadow: 0 0 10px rgba(20, 147, 255, 0.5);
+    }
+    .reset-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #1493FF;
+      color: white;
+      border: 2px solid #1493FF;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .reset-btn:hover {
+      background-color: #0A7AE0;
+      transform: scale(1.05);
+    }
+    .total-row {
+      font-weight: bold;
+      background-color: #0A183D;
+      color: #1493FF;
+      font-size: 1.1em;
+    }
+    td:nth-child(4) {
+      font-weight: bold;
+      color: #1493FF;
+    }
+    .grade {
+      font-weight: bold;
+      font-size: 1.1em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+    }
+    .grade-a {
+      color: #4CAF50;
+    }
+    .grade-b {
+      color: #8BC34A;
+    }
+    .grade-c {
+      color: #FFC107;
+    }
+    .grade-d {
+      color: #FF9800;
+    }
+    .grade-f {
+      color: #F44336;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NFL Fantasy Team Builder</h1>
+    
+    <div id="currentTeamCtn" class="current-team">
+      <img id="currentTeamLogo" class="team-logo" src="" alt="Team Logo">
+      <h2 id="currentTeamName" style="font-size: 1.3em; margin: 0;"></h2>
+    </div>
+    
+    <table id="teamTable">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Team</th>
+          <th>Player</th>
+          <th>Points</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody id="teamTableBody">
+        <!-- Rows will be added dynamically -->
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td>Total</td>
+          <td></td>
+          <td></td>
+          <td id="totalPoints">0</td>
+          <td id="totalGrade"></td>
+        </tr>
+      </tfoot>
+    </table>
+    
+    <button id="resetBtn" class="reset-btn">Reset</button>
+  </div>
+
+  <script>
+    // NFL team data
+    const nflTeams = [
+      { code: 'ARI', name: 'Arizona Cardinals', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ari.png' },
+      { code: 'ATL', name: 'Atlanta Falcons', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/atl.png' },
+      { code: 'BAL', name: 'Baltimore Ravens', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/bal.png' },
+      { code: 'BUF', name: 'Buffalo Bills', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/buf.png' },
+      { code: 'CAR', name: 'Carolina Panthers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/car.png' },
+      { code: 'CHI', name: 'Chicago Bears', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/chi.png' },
+      { code: 'CIN', name: 'Cincinnati Bengals', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/cin.png' },
+      { code: 'CLE', name: 'Cleveland Browns', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/cle.png' },
+      { code: 'DAL', name: 'Dallas Cowboys', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/dal.png' },
+      { code: 'DEN', name: 'Denver Broncos', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/den.png' },
+      { code: 'DET', name: 'Detroit Lions', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/det.png' },
+      { code: 'GB', name: 'Green Bay Packers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/gb.png' },
+      { code: 'HOU', name: 'Houston Texans', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/hou.png' },
+      { code: 'IND', name: 'Indianapolis Colts', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ind.png' },
+      { code: 'JAX', name: 'Jacksonville Jaguars', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/jax.png' },
+      { code: 'KC', name: 'Kansas City Chiefs', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/kc.png' },
+      { code: 'LV', name: 'Las Vegas Raiders', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lv.png' },
+      { code: 'LAC', name: 'Los Angeles Chargers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lac.png' },
+      { code: 'LAR', name: 'Los Angeles Rams', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lar.png' },
+      { code: 'MIA', name: 'Miami Dolphins', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/mia.png' },
+      { code: 'MIN', name: 'Minnesota Vikings', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/min.png' },
+      { code: 'NE', name: 'New England Patriots', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ne.png' },
+      { code: 'NO', name: 'New Orleans Saints', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/no.png' },
+      { code: 'NYG', name: 'New York Giants', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png' },
+      { code: 'NYJ', name: 'New York Jets', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png' },
+      { code: 'PHI', name: 'Philadelphia Eagles', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/phi.png' },
+      { code: 'PIT', name: 'Pittsburgh Steelers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/pit.png' },
+      { code: 'SF', name: 'San Francisco 49ers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png' },
+      { code: 'SEA', name: 'Seattle Seahawks', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/sea.png' },
+      { code: 'TB', name: 'Tampa Bay Buccaneers', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/tb.png' },
+      { code: 'TEN', name: 'Tennessee Titans', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ten.png' },
+      { code: 'WAS', name: 'Washington Commanders', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/was.png' }
+    ];
+
+    // Player data with fantasy points from last season
+    const playerData = {
+      ARI: {
+        QB: { name: 'Kyler Murray', points: 297.2 },
+        RB: { name: 'James Conner', points: 230.3 },
+        WR1: { name: 'Marvin Harrison Jr.', points: 165.5 },
+        WR2: { name: 'Michael Wilson', points: 101.0 },
+        TE: { name: 'Trey McBride', points: 194.3 },
+        DEF: { name: 'Cardinals D/ST', points: 100.0 }
+      },
+      ATL: {
+        QB: { name: 'Kirk Cousins', points: 176.3 },
+        RB: { name: 'Bijan Robinson', points: 311.2 },
+        WR1: { name: 'Drake London', points: 230.8 },
+        WR2: { name: 'Darnell Mooney', points: 161.2 },
+        TE: { name: 'Kyle Pitts', points: 107.7 },
+        DEF: { name: 'Falcons D/ST', points: 93.0 }
+      },
+      BAL: {
+        QB: { name: 'Lamar Jackson', points: 430.4 },
+        RB: { name: 'Derrick Henry', points: 326.9 },
+        WR1: { name: 'Zay Flowers', points: 172.5 },
+        WR2: { name: 'Rashod Bateman', points: 152.1 },
+        TE: { name: 'Mark Andrews', points: 161.3 },
+        DEF: { name: 'Ravens D/ST', points: 118.0 }
+      },
+      BUF: {
+        QB: { name: 'Josh Allen', points: 379.0 },
+        RB: { name: 'James Cook', points: 250.7 },
+        WR1: { name: 'Khalil Shakir', points: 144.5 },
+        WR2: { name: 'Amari Cooper', points: 100.7 },
+        TE: { name: 'Dalton Kincaid', points: 78.8 },
+        DEF: { name: 'Bills D/ST', points: 133.0 }
+      },
+      CAR: {
+        QB: { name: 'Bryce Young', points: 195.0 },
+        RB: { name: 'Chuba Hubbard', points: 220.1 },
+        WR1: { name: 'Adam Thielen', points: 115.5 },
+        WR2: { name: 'Xavier Legette', points: 100.6 },
+        TE: { name: 'Ja\'Tavion Sanders', points: 56.7 },
+        DEF: { name: 'Panthers D/ST', points: 41.0 }
+      },
+      CHI: {
+        QB: { name: 'Caleb Williams', points: 254.5 },
+        RB: { name: 'D\'Andre Swift', points: 193.5 },
+        WR1: { name: 'DJ Moore', points: 189.1 },
+        WR2: { name: 'Keenan Allen', points: 149.4 },
+        TE: { name: 'Cole Kmet', points: 96.9 },
+        DEF: { name: 'Bears D/ST', points: 117.0 }
+      },
+      CIN: {
+        QB: { name: 'Joe Burrow', points: 372.8 },
+        RB: { name: 'Chase Brown', points: 228.0 },
+        WR1: { name: 'Ja\'Marr Chase', points: 339.5 },
+        WR2: { name: 'Tee Higgins', points: 185.6 },
+        TE: { name: 'Mike Gesicki', points: 109.0 },
+        DEF: { name: 'Bengals D/ST', points: 102.0 }
+      },
+      CLE: {
+        QB: { name: 'Jameis Winston', points: 131.1 },
+        RB: { name: 'Jerome Ford', points: 115.5 },
+        WR1: { name: 'Jerry Jeudy', points: 195.9 },
+        WR2: { name: 'Elijah Moore', points: 90.4 },
+        TE: { name: 'David Njoku', points: 116.5 },
+        DEF: { name: 'Browns D/ST', points: 79.0 }
+      },
+      DAL: {
+        QB: { name: 'Dak Prescott', points: 116.5 },
+        RB: { name: 'Rico Dowdle', points: 178.3 },
+        WR1: { name: 'CeeDee Lamb', points: 212.9 },
+        WR2: { name: 'Jalen Tolbert', points: 127.5 },
+        TE: { name: 'Jake Ferguson', points: 74.9 },
+        DEF: { name: 'Cowboys D/ST', points: 109.0 }
+      },
+      DEN: {
+        QB: { name: 'Bo Nix', points: 316.7 },
+        RB: { name: 'Javonte Williams', points: 131.9 },
+        WR1: { name: 'Courtland Sutton', points: 199.8 },
+        WR2: { name: 'Marvin Mims', points: 110.0 },
+        TE: { name: 'Adam Trautman', points: 37.3 },
+        DEF: { name: 'Broncos D/ST', points: 179.0 }
+      },
+      DET: {
+        QB: { name: 'Jared Goff', points: 324.0 },
+        RB: { name: 'Jahmyr Gibbs', points: 336.9 },
+        WR1: { name: 'Amon-Ra St. Brown', points: 258.7 },
+        WR2: { name: 'Jameson Williams', points: 183.2 },
+        TE: { name: 'Sam LaPorta', points: 144.6 },
+        DEF: { name: 'Lions D/ST', points: 123.0 }
+      },
+      GB: {
+        QB: { name: 'Jordan Love', points: 233.9 },
+        RB: { name: 'Josh Jacobs', points: 275.1 },
+        WR1: { name: 'Jayden Reed', points: 169.5 },
+        WR2: { name: 'Romeo Doubs', points: 109.1 },
+        TE: { name: 'Tucker Kraft', points: 138.3 },
+        DEF: { name: 'Packers D/ST', points: 144.0 }
+      },
+      HOU: {
+        QB: { name: 'C.J. Stroud', points: 220.4 },
+        RB: { name: 'Joe Mixon', points: 222.5 },
+        WR1: { name: 'Nico Collins', points: 176.6 },
+        WR2: { name: 'Tank Dell', points: 114.5 },
+        TE: { name: 'Dalton Schultz', points: 91.7 },
+        DEF: { name: 'Texans D/ST', points: 139.0 }
+      },
+      IND: {
+        QB: { name: 'Anthony Richardson', points: 162.9 },
+        RB: { name: 'Jonathan Taylor', points: 237.7 },
+        WR1: { name: 'Josh Downs', points: 147.5 },
+        WR2: { name: 'Alec Pierce', points: 142.9 },
+        TE: { name: 'Mo Alie-Cox', points: 26.7 },
+        DEF: { name: 'Colts D/ST', points: 91.0 }
+      },
+      JAX: {
+        QB: { name: 'Trevor Lawrence', points: 145.2 },
+        RB: { name: 'Tank Bigsby', points: 125.5 },
+        WR1: { name: 'Brian Thomas Jr.', points: 240.5 },
+        WR2: { name: 'Parker Washington', points: 81.0 },
+        TE: { name: 'Brenton Strange', points: 71.1 },
+        DEF: { name: 'Jaguars D/ST', points: 67.0 }
+      },
+      KC: {
+        QB: { name: 'Patrick Mahomes', points: 282.5 },
+        RB: { name: 'Kareem Hunt', points: 143.9 },
+        WR1: { name: 'Xavier Worthy', points: 157.7 },
+        WR2: { name: 'Deandre Hopkins', points: 119.0 },
+        TE: { name: 'Travis Kelce', points: 146.9 },
+        DEF: { name: 'Chiefs D/ST', points: 104.0 }
+      },
+      LV: {
+        QB: { name: 'Gardner Minshew', points: 96.3 },
+        RB: { name: 'Alexander Mattison', points: 119.4 },
+        WR1: { name: 'Jakobi Meyers', points: 174.5 },
+        WR2: { name: 'Tre Tucker', points: 105.8 },
+        TE: { name: 'Brock Bowers', points: 206.7 },
+        DEF: { name: 'Raiders D/ST', points: 71.0 }
+      },
+      LAC: {
+        QB: { name: 'Justin Herbert', points: 285.4 },
+        RB: { name: 'J.K. Dobbins', points: 175.8 },
+        WR1: { name: 'Ladd McConkey', points: 199.9 },
+        WR2: { name: 'Quentin Johnston', points: 147.2 },
+        TE: { name: 'Will Dissly', points: 85.1 },
+        DEF: { name: 'Chargers D/ST', points: 126.0 }
+      },
+      LAR: {
+        QB: { name: 'Matthew Stafford', points: 214.6 },
+        RB: { name: 'Kyren Williams', points: 255.1 },
+        WR1: { name: 'Puka Nacua', points: 167.1 },
+        WR2: { name: 'Cooper Kupp', points: 141.5 },
+        TE: { name: 'Colby Parkinson', points: 50.4 },
+        DEF: { name: 'Rams D/ST', points: 114.0 }
+      },
+      MIA: {
+        QB: { name: 'Tua Tagovailoa', points: 181.6 },
+        RB: { name: 'De\'Von Achane', points: 260.9 },
+        WR1: { name: 'Tyreek Hill', points: 177.7 },
+        WR2: { name: 'Jaylen Waddle', points: 120.6 },
+        TE: { name: 'Jonnu Smith', points: 178.3 },
+        DEF: { name: 'Dolphins D/ST', points: 84.0 }
+      },
+      MIN: {
+        QB: { name: 'Sam Darnold', points: 308.0 },
+        RB: { name: 'Aaron Jones', points: 216.1 },
+        WR1: { name: 'Justin Jefferson', points: 266.0 },
+        WR2: { name: 'Jordan Addison', points: 181.0 },
+        TE: { name: 'T.J. Hockenson', points: 66.0 },
+        DEF: { name: 'Vikings D/ST', points: 158.0 }
+      },
+      NE: {
+        QB: { name: 'Drake Maye', points: 177.1 },
+        RB: { name: 'Rhamondre Stevenson', points: 159.4 },
+        WR1: { name: 'DeMario Douglas', points: 114.7 },
+        WR2: { name: 'Kayshon Boutte', points: 100.4 },
+        TE: { name: 'Hunter Henry', points: 112.4 },
+        DEF: { name: 'Patriots D/ST', points: 62.0 }
+      },
+      NO: {
+        QB: { name: 'Derek Carr', points: 239 },
+        RB: { name: 'Alvin Kamara', points: 234 },
+        WR1: { name: 'Chris Olave', points: 178 },
+        WR2: { name: 'Rashid Shaheed', points: 143 },
+        TE: { name: 'Juwan Johnson', points: 74 },
+        DEF: { name: 'Saints D/ST', points: 90.0 }
+      },
+      NYG: {
+        QB: { name: 'Daniel Jones', points: 135.3 },
+        RB: { name: 'Tyrone Tracy Jr.', points: 163.3 },
+        WR1: { name: 'Malik Nabers', points: 219.1 },
+        WR2: { name: 'Wan\'Dale Robinson', points: 136.2 },
+        TE: { name: 'Theo Johnson', points: 53.6 },
+        DEF: { name: 'Giants D/ST', points: 87.0 }
+      },
+      NYJ: {
+        QB: { name: 'Aaron Rodgers', points: 256.6 },
+        RB: { name: 'Breece Hall', points: 212.4 },
+        WR1: { name: 'Garrett Wilson', points: 201.4 },
+        WR2: { name: 'Davante Adams', points: 198.8 },
+        TE: { name: 'Tyler Conklin', points: 96.4 },
+        DEF: { name: 'Jets D/ST', points: 93.0 }
+      },
+      PHI: {
+        QB: { name: 'Jalen Hurts', points: 315.1 },
+        RB: { name: 'Saquon Barkley', points: 338.8 },
+        WR1: { name: 'A.J. Brown', points: 183.4 },
+        WR2: { name: 'DeVonta Smith', points: 165.4 },
+        TE: { name: 'Dallas Goedert', points: 82.6 },
+        DEF: { name: 'Eagles D/ST', points: 132.0 }
+      },
+      PIT: {
+        QB: { name: 'Russell Wilson', points: 172.8 },
+        RB: { name: 'Najee Harris', points: 186.6 },
+        WR1: { name: 'George Pickens', points: 134.9 },
+        WR2: { name: 'Calvin Austin III', points: 94.8 },
+        TE: { name: 'Pat Freiermuth', points: 135.8 },
+        DEF: { name: 'Steelers D/ST', points: 140.0 }
+      },
+      SF: {
+        QB: { name: 'Brock Purdy', points: 266.9 },
+        RB: { name: 'Jordan Mason', points: 109.5 },
+        WR1: { name: 'Jajuan Jennings', points: 172.0 },
+        WR2: { name: 'Deebo Samuel', points: 128.1 },
+        TE: { name: 'George Kittle', points: 197.6 },
+        DEF: { name: '49ers D/ST', points: 82.0 }
+      },
+      SEA: {
+        QB: { name: 'Geno Smith', points: 266.0 },
+        RB: { name: 'Kenneth Walker III', points: 158.2 },
+        WR1: { name: 'Jaxon Smith-Njigba', points: 203.0 },
+        WR2: { name: 'DK Metcalf', points: 158.2 },
+        TE: { name: 'Noah Fant', points: 80.0 },
+        DEF: { name: 'Seahawks D/ST', points: 132.0 }
+      },
+      TB: {
+        QB: { name: 'Baker Mayfield', points: 365.8 },
+        RB: { name: 'Bucky Irving', points: 220.9 },
+        WR1: { name: 'Mike Evans', points: 203.4 },
+        WR2: { name: 'Jalen McMillan', points: 116.9 },
+        TE: { name: 'Cade Otton', points: 111.1 },
+        DEF: { name: 'Buccaneers D/ST', points: 102.0 }
+      },
+      TEN: {
+        QB: { name: 'Will Levis', points: 119.9 },
+        RB: { name: 'Tony Pollard', points: 180.2 },
+        WR1: { name: 'Calvin Ridley', points: 167.2 },
+        WR2: { name: 'Nick Westbrook-Ikhine', points: 119.7 },
+        TE: { name: 'Chig Okonkwo', points: 87.6 },
+        DEF: { name: 'Titans D/ST', points: 69.0 }
+      },
+      WAS: {
+        QB: { name: 'Jayden Daniels', points: 355.8 },
+        RB: { name: 'Brian Robinson Jr.', points: 149.8 },
+        WR1: { name: 'Terry McLaurin', points: 226.8 },
+        WR2: { name: 'Olamide Zaccheaus', points: 91.9 },
+        TE: { name: 'Zach Ertz', points: 144.4 },
+        DEF: { name: 'Commanders D/ST', points: 88.0 }
+      }
+    };
+
+    // Positions to fill
+    const positions = ['QB', 'RB', 'WR1', 'WR2', 'TE', 'DEF'];
+    
+    // Team selections
+    let selectedTeams = {
+      QB: null,
+      RB: null,
+      WR1: null,
+      WR2: null,
+      TE: null,
+      DEF: null
+    };
+    
+    // Current team to assign
+    let currentTeam = null;
+    
+    // Calculate grade based on points and position
+    function calculateGrade(position, points) {
+      // Handle position mapping for WR positions
+      const posKey = position;
+      
+      // Get all players from this position
+      let allPositionPoints = [];
+      
+      // Special case for WR positions - combine both WR1 and WR2 stats for comparison
+      if (position === 'WR1' || position === 'WR2') {
+        Object.keys(playerData).forEach(teamCode => {
+          if (playerData[teamCode]['WR1']) {
+            allPositionPoints.push(playerData[teamCode]['WR1'].points);
+          }
+          if (playerData[teamCode]['WR2']) {
+            allPositionPoints.push(playerData[teamCode]['WR2'].points);
+          }
+        });
+      } else {
+        // For other positions, just collect that position's points
+        Object.keys(playerData).forEach(teamCode => {
+          if (playerData[teamCode][position]) {
+            allPositionPoints.push(playerData[teamCode][position].points);
+          }
+        });
+      }
+      
+      // Sort points in descending order
+      allPositionPoints.sort((a, b) => b - a);
+      
+      // Find the index of points in the sorted array
+      const index = allPositionPoints.indexOf(points);
+      
+      // Calculate percentile (lower percentile = better rank)
+      const percentile = index / allPositionPoints.length;
+      
+      // Determine grade based on percentile
+      if (percentile <= 0.1) return { letter: 'A+', class: 'grade-a' };
+      if (percentile <= 0.2) return { letter: 'A', class: 'grade-a' };
+      if (percentile <= 0.4) return { letter: 'B', class: 'grade-b' };
+      if (percentile <= 0.6) return { letter: 'C', class: 'grade-c' };
+      if (percentile <= 0.8) return { letter: 'D', class: 'grade-d' };
+      return { letter: 'F', class: 'grade-f' };
+    }
+    
+    // Calculate overall team grade based on total points
+    function calculateOverallGrade(totalPoints) {
+      // Based on analyzing the player data, these thresholds seem reasonable
+      if (totalPoints >= 1350) return { letter: 'A+', class: 'grade-a' };
+      if (totalPoints >= 1250) return { letter: 'A', class: 'grade-a' };
+      if (totalPoints >= 1150) return { letter: 'B', class: 'grade-b' };
+      if (totalPoints >= 1050) return { letter: 'C', class: 'grade-c' };
+      if (totalPoints >= 950) return { letter: 'D', class: 'grade-d' };
+      return { letter: 'F', class: 'grade-f' };
+    }
+    
+    // Function to select a team for a position
+    function selectTeam(position) {
+      if (!currentTeam) return;
+      
+      selectedTeams[position] = currentTeam.code;
+      
+      // Update the table with team info
+      document.getElementById(`${position}Team`).innerHTML = `
+        <img src="${currentTeam.logo}" alt="${currentTeam.name}" class="team-logo">
+      `;
+      
+      // Get the player for this position and team
+      const player = playerData[currentTeam.code][position];
+      document.getElementById(`${position}Name`).textContent = player.name;
+      document.getElementById(`${position}Points`).textContent = Math.round(player.points * 10) / 10;
+      
+      // Calculate and display grade
+      const grade = calculateGrade(position, player.points);
+      document.getElementById(`${position}Grade`).innerHTML = `
+        <span class="grade ${grade.class}">${grade.letter}</span>
+      `;
+      
+      // Get a new random team
+      getRandomTeam();
+      
+      // Update total points
+      updateTotalPoints();
+    }
+    
+    // Initialize the game
+    function initGame() {
+      // Create the table rows for each position
+      const tableBody = document.getElementById('teamTableBody');
+      tableBody.innerHTML = '';
+      
+      positions.forEach((pos, index) => {
+        const posKey = pos === 'WR' ? (index === 2 ? 'WR1' : 'WR2') : pos;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${pos}</td>
+          <td id="${posKey}Team"></td>
+          <td id="${posKey}Name"></td>
+          <td id="${posKey}Points">0</td>
+          <td id="${posKey}Grade"></td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      // Display initial random team
+      getRandomTeam();
+      
+      // Set up the reset button
+      document.getElementById('resetBtn').addEventListener('click', resetGame);
+      
+      // Update the UI
+      updateUI();
+    }
+    
+    // Get a random NFL team
+    function getRandomTeam() {
+      const availableTeams = nflTeams.filter(team => 
+        !Object.values(selectedTeams).includes(team.code)
+      );
+      
+      if (availableTeams.length === 0) {
+        currentTeam = null;
+        document.getElementById('currentTeamCtn').hidden = true;
+        return;
+      }
+      
+      const randomIndex = Math.floor(Math.random() * availableTeams.length);
+      currentTeam = availableTeams[randomIndex];
+      
+      document.getElementById('currentTeamName').textContent = currentTeam.name;
+      document.getElementById('currentTeamLogo').src = currentTeam.logo;
+      document.getElementById('currentTeamCtn').hidden = false;
+      
+      // Update buttons
+      updatePositionButtons();
+    }
+    
+    // Update position select buttons
+    function updatePositionButtons() {
+      positions.forEach((pos, index) => {
+        const posKey = pos === 'WR' ? (index === 2 ? 'WR1' : 'WR2') : pos;
+        const teamCell = document.getElementById(`${posKey}Team`);
+        
+        if (!selectedTeams[posKey]) {
+          teamCell.innerHTML = `<button onclick="selectTeam('${posKey}')">${pos}</button>`;
+        }
+      });
+    }
+    
+    // Update total points
+    function updateTotalPoints() {
+      let total = 0;
+      
+      positions.forEach((pos, index) => {
+        const posKey = pos === 'WR' ? (index === 2 ? 'WR1' : 'WR2') : pos;
+        if (selectedTeams[posKey]) {
+          const points = playerData[selectedTeams[posKey]][posKey].points;
+          total += points;
+        }
+      });
+      
+      document.getElementById('totalPoints').textContent = Math.round(total * 10) / 10;
+      
+      // Calculate and display overall grade
+      const grade = calculateOverallGrade(total);
+      document.getElementById('totalGrade').innerHTML = `
+        <span class="grade ${grade.class}">${grade.letter}</span>
+      `;
+    }
+    
+    // Reset the game
+    function resetGame() {
+      selectedTeams = {
+        QB: null,
+        RB: null,
+        WR1: null,
+        WR2: null,
+        TE: null,
+        DEF: null
+      };
+      
+      // Reset the table
+      positions.forEach((pos, index) => {
+        const posKey = pos === 'WR' ? (index === 2 ? 'WR1' : 'WR2') : pos;
+        document.getElementById(`${posKey}Team`).innerHTML = '';
+        document.getElementById(`${posKey}Name`).textContent = '';
+        document.getElementById(`${posKey}Points`).textContent = '0';
+        document.getElementById(`${posKey}Grade`).innerHTML = '';
+      });
+      
+      document.getElementById('totalPoints').textContent = '0';
+      document.getElementById('totalGrade').innerHTML = '';
+      
+      // Get a new random team
+      getRandomTeam();
+      
+      // Update the UI
+      updateUI();
+    }
+    
+    // Update the UI
+    function updateUI() {
+      updatePositionButtons();
+    }
+    
+    // Make selectTeam available globally
+    window.selectTeam = selectTeam;
+    
+    // Initialize the game when the page loads
+    window.onload = initGame;
+  </script>
+</body>
+</html>
