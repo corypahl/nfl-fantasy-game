@@ -9,9 +9,14 @@
 <body>
   <div class="container">
     <h1>NFL Fantasy Team Builder</h1>
+    <div id="gameInstructions" class="instructions">
+      <h2>How to Play:</h2>
+      <p>Build your NFL fantasy lineup! A random team will be shown. Select a position (QB, RB, WR1, WR2, TE, DEF) for that team. You won't know which team is next. Your score is based on the selected players' previous season fantasy points. Aim for the highest score and the best grade!</p>
+    </div>
     <div id="currentTeamCtn" class="current-team">
       <img id="currentTeamLogo" class="team-logo" src="" alt="Team Logo" />
       <h2 id="currentTeamName" style="font-size: 1.3em; margin: 0;"></h2>
+      <p id="currentTeamConferenceDivision" style="font-size: 0.9em; margin: 0;"></p>
     </div>
     <table id="teamTable">
       <thead>
@@ -34,7 +39,20 @@
         </tr>
       </tfoot>
     </table>
+    <p class="grading-explanation" style="margin-top: 10px; font-size: 0.85em;">Player Grades are based on percentile rank: A+ (Top 10%), A (Top 20%), B (Top 40%), C (Top 60%), D (Top 80%), F (Bottom 20%)</p>
     <button id="resetBtn" class="reset-btn">Reset</button>
+
+    <div id="leaderboardCtn" style="margin-top: 20px; padding: 10px; border: 2px solid #00FFFF; border-radius: 8px; background-color: rgba(10, 24, 61, 0.8);">
+      <h3 style="color: #00FFFF; text-align: center;">Leaderboard (Top 5)</h3>
+      <ol id="leaderboardList" style="list-style-type: none; padding-left: 0;"></ol>
+      <div id="nameInputCtn" style="display: none; margin-top: 10px; text-align: center;">
+        <input type="text" id="playerNameInput" placeholder="Enter your name (3 chars)" maxlength="3" style="padding: 8px; margin-right: 5px; border-radius: 4px; border: 1px solid #00FFFF; background-color: #0A183D; color: white;" />
+        <button id="saveScoreBtn" class="leaderboard-btn">Save Score</button>
+      </div>
+      <div style="text-align: center; margin-top: 10px;">
+        <button id="resetLeaderboardBtn" class="leaderboard-btn">Reset Leaderboard</button>
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>

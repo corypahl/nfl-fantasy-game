@@ -2,6 +2,9 @@
 let nflTeams = [];
 let playerData = {};
 
+const MAX_LEADERBOARD_ENTRIES = 5;
+const LEADERBOARD_KEY = 'nflFantasyLeaderboard';
+
 // Positions to fill
 const positions = ['QB', 'RB', 'WR1', 'WR2', 'TE', 'DEF'];
 
@@ -66,13 +69,15 @@ function calculateGrade(position, points) {
   // Find the index and calculate the percentile rank
   const index = allPositionPoints.indexOf(points);
   const percentile = index / allPositionPoints.length;
+  const rank = index;
+  const totalPlayers = allPositionPoints.length;
 
-  if (percentile <= 0.1) return { letter: 'A+', class: 'grade-a' };
-  if (percentile <= 0.2) return { letter: 'A', class: 'grade-a' };
-  if (percentile <= 0.4) return { letter: 'B', class: 'grade-b' };
-  if (percentile <= 0.6) return { letter: 'C', class: 'grade-c' };
-  if (percentile <= 0.8) return { letter: 'D', class: 'grade-d' };
-  return { letter: 'F', class: 'grade-f' };
+  if (percentile <= 0.1) return { letter: 'A+', class: 'grade-a', rank: rank, totalPlayers: totalPlayers };
+  if (percentile <= 0.2) return { letter: 'A', class: 'grade-a', rank: rank, totalPlayers: totalPlayers };
+  if (percentile <= 0.4) return { letter: 'B', class: 'grade-b', rank: rank, totalPlayers: totalPlayers };
+  if (percentile <= 0.6) return { letter: 'C', class: 'grade-c', rank: rank, totalPlayers: totalPlayers };
+  if (percentile <= 0.8) return { letter: 'D', class: 'grade-d', rank: rank, totalPlayers: totalPlayers };
+  return { letter: 'F', class: 'grade-f', rank: rank, totalPlayers: totalPlayers };
 }
 
 /**
@@ -110,6 +115,7 @@ function selectTeam(position) {
   const grade = calculateGrade(position, player.points);
   document.getElementById(`${position}Grade`).innerHTML = `
     <span class="grade ${grade.class}">${grade.letter}</span>
+    <span class="rank-display">(Rank: ${grade.rank + 1}/${grade.totalPlayers})</span>
   `;
   
   // Choose a new random team for the next selection
@@ -169,9 +175,14 @@ function getRandomTeam() {
   // Update the display with the new team's name and logo
   document.getElementById('currentTeamName').textContent = currentTeam.name;
   document.getElementById('currentTeamLogo').src = currentTeam.logo;
+  document.getElementById('currentTeamConferenceDivision').textContent = `Conference: ${currentTeam.conference}, Division: ${currentTeam.division}`;
   document.getElementById('currentTeamCtn').hidden = false;
   
   updatePositionButtons();
+
+  if (availableTeams.length === 0) {
+    checkAndPromptForHighScore(); // Call to check for high score
+  }
 }
 
 /**
@@ -225,6 +236,7 @@ function resetGame() {
   
   getRandomTeam();
   updateUI();
+  document.getElementById('nameInputCtn').style.display = 'none';
 }
 
 /**
@@ -238,5 +250,57 @@ function updateUI() {
 window.onload = function() {
   loadData().then(() => {
     initGame();
+    loadLeaderboard(); // Initial call to load leaderboard
+
+    // Event Listeners for leaderboard
+    document.getElementById('saveScoreBtn').addEventListener('click', () => {
+      const playerNameInput = document.getElementById('playerNameInput');
+      const playerName = playerNameInput.value.trim().substring(0, 3).toUpperCase() || 'ANO'; // Default to ANO, max 3 chars
+      const totalPoints = parseFloat(document.getElementById('totalPoints').textContent);
+      savePlayerScore(playerName, totalPoints);
+      playerNameInput.value = ''; // Clear input
+      document.getElementById('nameInputCtn').style.display = 'none'; // Hide input
+    });
+
+    document.getElementById('resetLeaderboardBtn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset the leaderboard?')) {
+        localStorage.removeItem(LEADERBOARD_KEY);
+        loadLeaderboard();
+      }
+    });
   });
 };
+
+function loadLeaderboard() {
+  const leaderboardList = document.getElementById('leaderboardList');
+  leaderboardList.innerHTML = ''; // Clear existing list
+  const scores = JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
+  
+  scores.forEach((score, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="score-name">${index + 1}. ${score.name}</span> <span class="score-points">${Math.round(score.points * 10) / 10} pts</span>`;
+    leaderboardList.appendChild(li);
+  });
+}
+
+function savePlayerScore(name, points) {
+  const scores = JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
+  scores.push({ name, points });
+  scores.sort((a, b) => b.points - a.points); // Sort descending
+  const newScores = scores.slice(0, MAX_LEADERBOARD_ENTRIES); // Keep top N
+  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(newScores));
+  loadLeaderboard();
+}
+
+function checkAndPromptForHighScore() {
+  const totalPoints = parseFloat(document.getElementById('totalPoints').textContent);
+  const scores = JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
+  
+  if (scores.length < MAX_LEADERBOARD_ENTRIES || totalPoints > (scores[scores.length - 1]?.points || 0) ) {
+    if (scores.length === MAX_LEADERBOARD_ENTRIES && totalPoints <= scores[MAX_LEADERBOARD_ENTRIES-1].points) {
+        // If leaderboard is full and score is not better than the last one, do nothing
+        return;
+    }
+    document.getElementById('nameInputCtn').style.display = 'block';
+  }
+}

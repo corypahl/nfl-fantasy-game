@@ -22,8 +22,8 @@ body {
   
   h1 {
     color: #1493FF;
-    font-size: 1.8em;
-    margin-bottom: 10px;
+    font-size: 2.2em;
+    margin-bottom: 15px;
     text-transform: uppercase;
   }
   
@@ -43,7 +43,7 @@ body {
     border: 1px solid #1493FF;
     text-align: center;
     vertical-align: middle;
-    font-size: 0.9em;
+    font-size: 1em;
   }
   
   th {
@@ -114,6 +114,113 @@ body {
   
   .total-row {
     font-weight: bold;
-    background-color: #0A183D;
+    background-color: #08142F;
+    color: #FFFFFF;
   }
-  
+
+.instructions {
+  margin: 15px 0;
+  padding: 10px;
+  border: 2px solid #FFA500; /* Orange border for contrast */
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.75); /* Slightly different background */
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+.instructions h2 {
+  color: #FFA500; /* Orange color for the heading */
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+.instructions p {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 5px;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  th, td {
+    font-size: 0.85em;
+    padding: 6px;
+  }
+  .team-logo {
+    width: 30px;
+    height: 30px;
+  }
+  button {
+    padding: 8px 10px;
+    font-size: 0.9em;
+  }
+  .current-team h2 {
+    font-size: 1.1em;
+  }
+  .instructions h2 {
+    font-size: 1.1em;
+  }
+  .instructions p {
+    font-size: 0.8em;
+  }
+}
+
+.rank-display {
+  font-size: 0.8em;
+  color: #cccccc; /* Light gray color for the rank */
+  display: block; /* Make it appear on a new line or adjust as needed */
+  margin-top: 2px;
+}
+
+/* Adjust media query for rank display if necessary */
+@media (max-width: 600px) {
+  .rank-display {
+    font-size: 0.75em;
+  }
+}
+
+#leaderboardList li {
+  padding: 5px 0;
+  border-bottom: 1px dashed #00AAAA;
+  text-align: left; /* Align text to the left for better readability */
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%; /* Or a fixed width */
+}
+#leaderboardList li:last-child {
+  border-bottom: none;
+}
+#leaderboardList .score-name {
+  font-weight: bold;
+  color: #FFFFFF;
+}
+#leaderboardList .score-points {
+  float: right;
+  color: #FFA500;
+}
+.leaderboard-btn { /* Style for new buttons */
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #00FFFF;
+  color: #0A183D;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.3s;
+  margin: 5px;
+}
+.leaderboard-btn:hover {
+  background-color: #00AAAA;
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+/* Adjust media query for leaderboard if necessary */
+@media (max-width: 600px) {
+  #leaderboardList li {
+    width: 95%;
+  }
+  #playerNameInput {
+    width: 60%;
+  }
+}
