@@ -179,10 +179,6 @@ function getRandomTeam() {
   document.getElementById('currentTeamCtn').hidden = false;
   
   updatePositionButtons();
-
-  if (availableTeams.length === 0) {
-    checkAndPromptForHighScore(); // Call to check for high score
-  }
 }
 
 /**
@@ -216,6 +212,19 @@ function updateTotalPoints() {
   document.getElementById('totalGrade').innerHTML = `
     <span class="grade ${grade.class}">${grade.letter}</span>
   `;
+
+  // Check if all positions are filled
+  let allPositionsFilled = true;
+  for (const position of positions) { // 'positions' is the global array e.g., ['QB', 'RB', ...]
+    if (selectedTeams[position] === null) {
+      allPositionsFilled = false;
+      break;
+    }
+  }
+
+  if (allPositionsFilled) {
+    checkAndPromptForHighScore();
+  }
 }
 
 /**
